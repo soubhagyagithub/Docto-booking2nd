@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Heart, Menu, X, LogIn } from "lucide-react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { ThemeToggle } from "@/components/ThemeToggle" // ✅ Add this line
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -56,7 +57,7 @@ function NavLink({ name, href, onClick }: { name: string; href: string; onClick?
     <Link
       href={href}
       onClick={handleScroll}
-      className="text-base font-medium text-gray-700 hover:text-blue-600 transition-colors py-3 px-4 block w-full text-center md:text-left"
+      className="text-base font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-3 px-4 block w-full text-center md:text-left"
     >
       {name}
     </Link>
@@ -71,7 +72,7 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-sm"
+      className="sticky top-0 z-50 w-full border-b border-gray-100 dark:border-gray-800 bg-white/95 dark:bg-gray-950/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-950/60 shadow-sm"
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-8 max-w-screen-xl">
         {/* Logo */}
@@ -101,23 +102,25 @@ export default function Navbar() {
           ))}
         </motion.nav>
 
-        {/* Login Button (Desktop) */}
+        {/* Desktop Actions: Login + Theme Toggle */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="hidden md:flex"
+          className="hidden md:flex items-center space-x-4"
         >
           <Link href="/auth">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center"
-              >
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center">
                 <LogIn className="mr-2 h-5 w-5" />
                 Login
               </Button>
             </motion.div>
           </Link>
+          {/* ✅ Desktop only ThemeToggle */}
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
         </motion.div>
 
         {/* Mobile Menu Icon */}
@@ -126,7 +129,7 @@ export default function Navbar() {
             variant="ghost"
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-gray-700 hover:bg-gray-100"
+            className="text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
             aria-label="Toggle mobile menu"
           >
             {mobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
@@ -142,7 +145,7 @@ export default function Navbar() {
             animate="open"
             exit="closed"
             variants={menuVariants}
-            className="md:hidden w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-t border-gray-100 shadow-md absolute top-20 left-0"
+            className="md:hidden w-full bg-white/95 dark:bg-gray-950/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-950/60 border-t border-gray-100 dark:border-gray-800 shadow-md absolute top-20 left-0"
           >
             <nav className="flex flex-col items-center py-4 px-4">
               {navLinks.map((link) => (
@@ -150,18 +153,21 @@ export default function Navbar() {
                   <NavLink {...link} onClick={() => setMobileMenuOpen(false)} />
                 </motion.div>
               ))}
+
               <motion.div variants={itemVariants} className="w-full px-4 mt-4">
                 <Link href="/auth" className="w-full">
-                  {/* FIX: Remove whileHover/whileTap from Button, use on motion.div instead */}
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Button
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center"
-                    >
+                    <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center">
                       <LogIn className="mr-2 h-5 w-5" />
                       Login
                     </Button>
                   </motion.div>
                 </Link>
+              </motion.div>
+
+              {/* ✅ Mobile-only ThemeToggle */}
+              <motion.div variants={itemVariants} className="mt-4 md:hidden">
+                <ThemeToggle />
               </motion.div>
             </nav>
           </motion.div>

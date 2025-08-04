@@ -22,13 +22,7 @@ import { useRouter } from "next/navigation"; // NEW: For the "Find a Doctor" but
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"; // NEW: For filtering tabs
 
 // Define possible filter types
-type AppointmentStatusFilter =
-  | "all"
-  | "pending"
-  | "confirmed"
-  | "cancelled"
-  | "completed";
-
+type AppointmentStatusFilter = "all" | "pending" | "confirmed" | "cancelled" | "completed";
 
 export default function AppointmentsPage() {
   const { user } = useAuth();
@@ -41,8 +35,7 @@ export default function AppointmentsPage() {
   const [filter, setFilter] = useState<AppointmentStatusFilter>("all");
 
   const loadAppointments = async () => {
-    if (!user?.id) {
-      // Use optional chaining for safety
+    if (!user?.id) { // Use optional chaining for safety
       // If user is not logged in, set error and stop loading
       setError("User not logged in. Please log in to view appointments.");
       setIsLoading(false);
@@ -121,37 +114,19 @@ export default function AppointmentsPage() {
 
           {/* NEW: Filter Tabs */}
           <div className="mb-6">
-            <Tabs
-              value={filter}
-              onValueChange={(value) =>
-                setFilter(value as AppointmentStatusFilter)
-              }
-              className="w-full"
-            >
+            <Tabs value={filter} onValueChange={(value) => setFilter(value as AppointmentStatusFilter)} className="w-full">
               <TabsList className="grid w-full grid-cols-5 md:grid-cols-5 h-auto">
-                <TabsTrigger value="all" className="py-2 px-4">
-                  All
-                </TabsTrigger>
-                <TabsTrigger value="pending" className="py-2 px-4">
-                  Pending
-                </TabsTrigger>
-                <TabsTrigger value="confirmed" className="py-2 px-4">
-                  Confirmed
-                </TabsTrigger>
-                <TabsTrigger value="cancelled" className="py-2 px-4">
-                  Cancelled
-                </TabsTrigger>
-                <TabsTrigger value="completed" className="py-2 px-4">
-                  Completed
-                </TabsTrigger>
+                <TabsTrigger value="all" className="py-2 px-4">All</TabsTrigger>
+                <TabsTrigger value="pending" className="py-2 px-4">Pending</TabsTrigger>
+                <TabsTrigger value="confirmed" className="py-2 px-4">Confirmed</TabsTrigger>
+                <TabsTrigger value="cancelled" className="py-2 px-4">Cancelled</TabsTrigger>
+                <TabsTrigger value="completed" className="py-2 px-4">Completed</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
 
           {error && ( // Display API loading errors
-            <div className="text-center text-red-500 dark:text-red-400 mb-4">
-              {error}
-            </div>
+            <div className="text-center text-red-500 dark:text-red-400 mb-4">{error}</div>
           )}
 
           {isLoading ? (
@@ -163,9 +138,7 @@ export default function AppointmentsPage() {
               <CardContent className="flex flex-col items-center justify-center p-6">
                 <Calendar className="w-20 h-20 text-blue-500 dark:text-blue-400 mb-4" />
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  {filter === "all"
-                    ? "No Appointments Yet!"
-                    : `No ${filter} Appointments`}
+                  {filter === "all" ? "No Appointments Yet!" : `No ${filter} Appointments`}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-sm">
                   {filter === "all"
@@ -193,27 +166,24 @@ export default function AppointmentsPage() {
             </Card>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAppointments.map(
-                (
-                  appointment // Map over filteredAppointments
-                ) => (
-                  <Card
-                    key={appointment.id}
-                    className="hover:shadow-xl transition-shadow"
-                  >
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg flex items-center">
-                          <User className="w-5 h-5 mr-2" />
-                          {appointment.doctorName}
-                        </CardTitle>
-                        <Badge
-                          className={`${getStatusBadgeClass(
-                            appointment.status
-                          )} capitalize`}
-                        >
-                          {appointment.status}
-                        </Badge>
+              {filteredAppointments.map((appointment) => ( // Map over filteredAppointments
+                <Card
+                  key={appointment.id}
+                  className="hover:shadow-xl transition-shadow"
+                >
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-lg flex items-center">
+                        <User className="w-5 h-5 mr-2" />
+                        {appointment.doctorName}
+                      </CardTitle>
+                      <Badge
+                        className={`${getStatusBadgeClass(
+                          appointment.status
+                        )} capitalize`}
+                      >
+                        {appointment.status}
+                      </Badge>
                     </div>
                     <CardDescription className="flex items-center text-teal-600 dark:text-teal-400 pt-1">
                       <Stethoscope className="w-4 h-4 mr-2" />
@@ -234,42 +204,22 @@ export default function AppointmentsPage() {
                           }
                         )}
                       </div>
-                      <CardDescription className="flex items-center text-teal-600 dark:text-teal-400 pt-1">
-                        <Stethoscope className="w-4 h-4 mr-2" />
-                        {appointment.specialty}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3">
-                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                          <Calendar className="w-4 h-4 mr-2" />
-                          {new Date(appointment.date).toLocaleDateString(
-                            "en-US",
-                            {
-                              weekday: "long",
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            }
-                          )}
-                        </div>
-                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                          <Clock className="w-4 h-4 mr-2" />
-                          {appointment.time}
-                        </div>
+                      <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                        <Clock className="w-4 h-4 mr-2" />
+                        {appointment.time}
                       </div>
-                    </CardContent>
-                    <div className="px-6 pb-4">
-                      <AppointmentActions
-                        appointmentId={appointment.id}
-                        status={appointment.status}
-                        doctorId={appointment.doctorId}
-                        onAppointmentAction={loadAppointments}
-                      />
                     </div>
-                  </Card>
-                )
-              )}
+                  </CardContent>
+                  <div className="px-6 pb-4">
+                    <AppointmentActions
+                      appointmentId={appointment.id}
+                      status={appointment.status}
+                      doctorId={appointment.doctorId}
+                      onAppointmentAction={loadAppointments}
+                    />
+                  </div>
+                </Card>
+              ))}
             </div>
           )}
         </div>
@@ -278,4 +228,3 @@ export default function AppointmentsPage() {
     </ProtectedRoute>
   );
 }
-

@@ -113,17 +113,17 @@ const colorMap: Record<string, string> = {
 }
 
 const bgColorMap: Record<string, string> = {
-  blue: "bg-blue-100 group-hover:bg-blue-600",
-  green: "bg-green-100 group-hover:bg-green-600",
-  purple: "bg-purple-100 group-hover:bg-purple-600",
-  orange: "bg-orange-100 group-hover:bg-orange-600",
-  red: "bg-red-100 group-hover:bg-red-600",
-  teal: "bg-teal-100 group-hover:bg-teal-600",
+  blue: "bg-blue-100 dark:bg-blue-900 group-hover:bg-blue-600",
+  green: "bg-green-100 dark:bg-green-900 group-hover:bg-green-600",
+  purple: "bg-purple-100 dark:bg-purple-900 group-hover:bg-purple-600",
+  orange: "bg-orange-100 dark:bg-orange-900 group-hover:bg-orange-600",
+  red: "bg-red-100 dark:bg-red-900 group-hover:bg-red-600",
+  teal: "bg-teal-100 dark:bg-teal-900 group-hover:bg-teal-600",
 }
 
 export default function ServicesSection() {
   return (
-    <AnimatedSection className="py-20 md:py-32 bg-gradient-to-br from-white via-blue-50 to-purple-50 overflow-hidden">
+    <AnimatedSection className="py-20 md:py-32 bg-gradient-to-br from-white via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 overflow-hidden">
       <section id="services">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
@@ -131,13 +131,13 @@ export default function ServicesSection() {
             variants={fadeInUp}
             className="text-center max-w-3xl mx-auto space-y-4"
           >
-            <Badge className="bg-blue-100 text-blue-600 hover:bg-blue-200">
+            <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 hover:bg-blue-200">
               Our Services
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">
               Comprehensive Healthcare Services
             </h2>
-            <p className="text-gray-600 md:text-lg leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 md:text-lg leading-relaxed">
               From preventive care to specialized treatments, we offer a full
               range of medical services to meet your health needs — all in one place.
             </p>
@@ -155,7 +155,7 @@ export default function ServicesSection() {
 
               return (
                 <motion.div key={index} variants={scaleIn}>
-                  <Card className="group relative overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl">
+                  <Card className="group relative overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 bg-white/80 dark:bg-gray-800 backdrop-blur-xl border border-gray-100 dark:border-gray-700 rounded-2xl">
                     <CardContent className="p-6 flex flex-col h-full">
                       <div
                         className={`flex items-center justify-center w-14 h-14 rounded-xl mb-5 transition-all duration-300 shadow-sm ${bg}`}
@@ -164,10 +164,12 @@ export default function ServicesSection() {
                           className={`h-6 w-6 text-${color} group-hover:text-white transition-colors duration-300`}
                         />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-${color}">
+                      <h3
+                        className={`text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-${color}`}
+                      >
                         {service.title}
                       </h3>
-                      <p className="text-gray-600 mb-6 flex-grow">
+                      <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow">
                         {service.description}
                       </p>
                       <Button
