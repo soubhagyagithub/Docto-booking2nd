@@ -482,5 +482,54 @@
       "symptoms": "",
       "fee": 120
     }
+  ],
+  "prescriptions": [
+    {
+      "id": "1",
+      "appointmentId": "1753449750705",
+      "doctorId": "1",
+      "patientId": "1",
+      "doctorName": "Dr. Sarah Johnson",
+      "patientName": "John Doe",
+      "medicines": [
+        {
+          "id": "1",
+          "name": "Lisinopril",
+          "dosage": "10mg",
+          "duration": "30 days",
+          "instructions": "Take once daily in the morning with food"
+        },
+        {
+          "id": "2", 
+          "name": "Metoprolol",
+          "dosage": "50mg",
+          "duration": "30 days",
+          "instructions": "Take twice daily, morning and evening"
+        }
+      ],
+      "notes": "Follow up in 2 weeks. Monitor blood pressure daily.",
+      "createdAt": "2025-01-27T10:30:00Z",
+      "updatedAt": "2025-01-27T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "appointmentId": "1753608244069",
+      "doctorId": "2",
+      "patientId": "1",
+      "doctorName": "Dr. Michael Chen",
+      "patientName": "John Doe",
+      "medicines": [
+        {
+          "id": "1",
+          "name": "Tretinoin Cream",
+          "dosage": "0.025%",
+          "duration": "12 weeks",
+          "instructions": "Apply thin layer to affected areas at bedtime"
+        }
+      ],
+      "notes": "Avoid sun exposure. Use sunscreen daily.",
+      "createdAt": "2025-01-27T11:15:00Z",
+      "updatedAt": "2025-01-27T11:15:00Z"
+    }
   ]
 }
